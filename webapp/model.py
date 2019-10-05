@@ -43,11 +43,6 @@ class Values(Base):
 
 Base.metadata.create_all(engine)
 
-print(Table('users', metadata, autoload=True).columns)
-print(Table('values', metadata, autoload=True).columns)
-for _t in metadata.tables:
-    print(f"Table: '{_t}'")
-
 
 def UserRegistration():
     user_name = str(input("Enter user's name: ").strip())
@@ -64,5 +59,9 @@ def UserRegistration():
     conn.execute(ins)
 
 
-# if __name__ == '__main__':
-#     UserRegistration()
+if __name__ == '__main__':
+    # UserRegistration()
+    print(Table('users', metadata, autoload=True).columns)
+    print(Table('values', metadata, autoload=True).columns)
+    for _t in metadata.tables:
+        print(f"Table: '{_t}'")

@@ -1,3 +1,3 @@
-from webapp.model import Base, engine
+from model import Base, engine
 
 Base.metadata.create_all(engine)
