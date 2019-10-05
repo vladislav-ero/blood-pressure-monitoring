@@ -2,7 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Text, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base
 
-database_url = 'postgresql://localhost/blood_pressure'
+from config import SQLALCHEMY_DATABASE_URI
+
+# database_url = 'postgresql://localhost/blood_pressure'
+database_url = SQLALCHEMY_DATABASE_URI
 engine = create_engine(database_url)
 metadata = MetaData(bind=engine)
 
