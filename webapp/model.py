@@ -4,9 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from config import SQLALCHEMY_DATABASE_URI
 
-# database_url = 'postgresql://localhost/blood_pressure'
-database_url = SQLALCHEMY_DATABASE_URI
-engine = create_engine(database_url)
+engine = create_engine(SQLALCHEMY_DATABASE_URI)
 metadata = MetaData(bind=engine)
 
 Base = declarative_base()
