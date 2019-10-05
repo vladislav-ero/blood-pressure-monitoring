@@ -12,10 +12,10 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    surname = Column(String)
-    password = Column(String)
-    age = Column(Integer)
+    name = Column(String, nullable=False)
+    surname = Column(String, nullable=False)
+    password = Column(String, nullable=False)
+    age = Column(Integer, nullable=True)
 
     def __init__(self, name, surname, password, age):
         self.name = name
