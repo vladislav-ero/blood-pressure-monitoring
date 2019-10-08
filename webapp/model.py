@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Text, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base
 
-from config import SQLALCHEMY_DATABASE_URI
+from webapp.config import SQLALCHEMY_DATABASE_URI
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 metadata = MetaData(bind=engine)
@@ -44,7 +44,7 @@ class Values(Base):
 Base.metadata.create_all(engine)
 
 
-def UserRegistration():
+def user_registration():
     user_name = str(input("Enter user's name: ").strip())
     user_surname = str(input("Enter user's surname: ").strip())
     user_password = str(input("Enter user's password: ").strip())
@@ -60,7 +60,7 @@ def UserRegistration():
 
 
 if __name__ == '__main__':
-    # UserRegistration()
+    # user_registration()
     print(Table('users', metadata, autoload=True).columns)
     print(Table('values', metadata, autoload=True).columns)
     for _t in metadata.tables:
