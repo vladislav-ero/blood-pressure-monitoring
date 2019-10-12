@@ -10,8 +10,6 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="./css/sign_in.css">
   </head>
 
   <body>
@@ -25,30 +23,18 @@
           <div class="card card-signin my-5">
             <div class="card-body">
               <h5 class="card-title text-center">Sign up</h5>
-              <form class="form-signin">
-                <div class="form-label-group">
-                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="e.g. Ivan" required autofocus>
-                    <label for="first_name">Firstname</label>
-                </div>
-
-                <div class="form-label-group">
-                  <input type="text" name="last_name" id="last_name" class="form-control" placeholder="e.g. Ivanov" required autofocus>
-                  <label for="last_name">Lastname</label>
-                </div>
-
-                <hr>
-
-                <div class="form-label-group">
-                  <input type="password" name="input_password" id="input_password" class="form-control" placeholder="Password" required>
-                  <label for="input_password">Password</label>
-                </div>
-
-                <div class="custom-control custom-checkbox mb-3">
-                  <input type="checkbox" class="custom-control-input" id="customCheck1">
-                  <label class="custom-control-label" for="customCheck1">Remember password</label>
-                </div>
-
-                <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase">Sign up</button>
+              <form class="form-signin" action="" method="POST">
+                  {{ form.hidden_tag() }}
+                  <div class="form-label-group">
+                    {{ form.username.label }}
+                    {{ form.username() }}
+                  </div>
+                  <div class="form-label-group">
+                    {{ form.password.label }}
+                    {{ form.password() }}
+                  </div>
+                  <button>{{ form.submit }}</button>
+              </form>
               </form>
             </div>
           </div>
