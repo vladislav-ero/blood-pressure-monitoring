@@ -1,7 +1,11 @@
-from webapp.forms import LoginForm
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for
+from flask_login import LoginManager, login_user
 
 from webapp.config import SECRET_KEY
+from webapp.model import Session, User
+from webapp.forms import LoginForm
+
+session = Session()
 
 
 def create_app():
@@ -10,6 +14,14 @@ def create_app():
                            WTF_CSRF_SECRET_KEY=SECRET_KEY
                            )
                       )
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return session.query(User).filter_by(id=user_id)
 
     @app.route('/')
     def index():
@@ -24,5 +36,17 @@ def create_app():
                                page_title=page_title,
                                form=login_form
                                )
+
+    @app.route('/process-login', methods=['POST'])
+    def process_login():
+        form = LoginForm()
+        if form.validate_on_submit():
+            user = session.query(User).filter_by(username=form.username.data)
+            if user and user.check_password(form.password.data):
+                login_user(user)
+                flash('You entered site successfuly')
+                return redirect(url_for('index'))
+        flash('Incorrect username or password')
+        return redirect(url_for('login'))
 
     return app

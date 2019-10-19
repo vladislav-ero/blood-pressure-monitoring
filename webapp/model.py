@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Text, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from webapp.config import SQLALCHEMY_DATABASE_URI
@@ -30,15 +31,15 @@ class User(Base, UserMixin):
         self.name = name
         self.surname = surname
 
-    def __repr__(self):
-        return f"<User('{self.username}', '{self.name}', '{self.surname}', "\
-               f"'{self.password}', '{self.user_age}')>"
-
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def __repr__(self):
+        return f"<User('{self.username}', '{self.name}', '{self.surname}', "\
+               f"'{self.password}', '{self.user_age}')>"
 
 
 class Values(Base):
@@ -54,6 +55,7 @@ class Values(Base):
 
 
 Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
 
 
 def user_registration():
