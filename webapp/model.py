@@ -1,6 +1,8 @@
+from flask_login import UserMixin
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Text, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from webapp.config import SQLALCHEMY_DATABASE_URI
 
@@ -10,25 +12,33 @@ metadata = MetaData(bind=engine)
 Base = declarative_base()
 
 
-class User(Base):
+class User(Base, UserMixin):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    username = Column(String, index=True, unique=True,
-                      nullable=False)
+    username = Column(String, index=True, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    role = Column(String, nullable=False)
+    age = Column(Integer, nullable=True)
     name = Column(String, nullable=True)
     surname = Column(String, nullable=True)
-    password = Column(String, nullable=False)
-    age = Column(Integer, nullable=True)
 
-    def __init__(self, name, surname, password, age):
+    def __init__(self, username, password, role, age, name, surname):
+        self.username = username
+        self.password = password
+        self.role = role
+        self.age = age
         self.name = name
         self.surname = surname
-        self.password = password
-        self.age = age
 
     def __repr__(self):
-        return f"<User('{self.name}', '{self.surname}', '{self.password}', "\
-               f"'{self.user_age}')>"
+        return f"<User('{self.username}', '{self.name}', '{self.surname}', "\
+               f"'{self.password}', '{self.user_age}')>"
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
 
 class Values(Base):
