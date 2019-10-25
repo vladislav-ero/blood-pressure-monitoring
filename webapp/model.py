@@ -23,23 +23,18 @@ class User(Base, UserMixin):
     name = Column(String, nullable=True)
     surname = Column(String, nullable=True)
 
-    def __init__(self, username, password, role, age, name, surname):
-        self.username = username
-        self.password = password
-        self.role = role
-        self.age = age
-        self.name = name
-        self.surname = surname
-
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
+
     def __repr__(self):
-        return f"<User('{self.username}', '{self.name}', '{self.surname}', "\
-               f"'{self.password}', '{self.user_age}')>"
+        return f"<User '{self.username}' id{self.id}"
 
 
 class Values(Base):

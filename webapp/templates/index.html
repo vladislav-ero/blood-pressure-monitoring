@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom styles for this template -->
-    <!-- <link rel="stylesheet" type="text/css" href="/static/css/sign_in.css"> -->
+    <link rel="stylesheet" type="text/css" href="/static/css/sign_in.css">
   </head>
 
   <body>
@@ -22,6 +22,15 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+              {% for message in messages %}
+                {{ message }}<br>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% endwith %}
           <div class="card card-signin my-5">
             <div class="card-body">
               <h5 class="card-title text-center">Sign up</h5>

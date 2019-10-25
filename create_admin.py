@@ -21,8 +21,7 @@ with app.app_context():
         print('Passwords are not same')
         sys.exit(0)
 
-    new_user = User(username=username, password='', role='admin', age=0,
-                    name='', surname='')
+    new_user = User(username=username, role='admin')
     new_user.set_password(password1)
 
     session.add(new_user)

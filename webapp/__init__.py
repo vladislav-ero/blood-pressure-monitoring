@@ -1,5 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, current_user, login_required, \
+                        login_user, logout_user
 
 from webapp.config import SECRET_KEY
 from webapp.model import Session, User
@@ -21,7 +22,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return session.query(User).filter_by(id=user_id)
+        return session.query(User).filter_by(id=user_id).first()
 
     @app.route('/')
     def index():
@@ -30,6 +31,8 @@ def create_app():
 
     @app.route('/login')
     def login():
+        if current_user.is_authenticated:
+            return redirect(url_for('index'))
         page_title = 'Authorization'
         login_form = LoginForm()
         return render_template('login.html',
@@ -41,12 +44,27 @@ def create_app():
     def process_login():
         form = LoginForm()
         if form.validate_on_submit():
-            user = session.query(User).filter_by(username=form.username.data)
+            user = session.query(User).filter_by(
+                username=form.username.data).first()
             if user and user.check_password(form.password.data):
                 login_user(user)
                 flash('You entered site successfuly')
                 return redirect(url_for('index'))
         flash('Incorrect username or password')
         return redirect(url_for('login'))
+
+    @app.route('/logout')
+    def logout():
+        logout_user()
+        flash('You logged out successfuly')
+        return redirect(url_for('index'))
+
+    @app.route('/admin')
+    @login_required
+    def admin_index():
+        if current_user.is_admin:
+            return "Hello admin"
+        else:
+            return "You are not admin"
 
     return app
