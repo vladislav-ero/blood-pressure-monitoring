@@ -43,11 +43,12 @@ def create_app():
     @app.route('/process-login', methods=['POST'])
     def process_login():
         form = LoginForm()
+
         if form.validate_on_submit():
             user = session.query(User).filter_by(
                 username=form.username.data).first()
             if user and user.check_password(form.password.data):
-                login_user(user)
+                login_user(user, remember=form.remember_me.data)
                 flash('You entered site successfuly')
                 return redirect(url_for('index'))
         flash('Incorrect username or password')

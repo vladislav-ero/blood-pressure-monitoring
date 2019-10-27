@@ -44,7 +44,11 @@
                     {{ form.password.label }}
                     {{ form.password() }}
                   </div>
-                  <button>{{ form.submit }}</button>
+                  <div class="form-group form-check">
+                    {{ form.remember_me() }}
+                    {{ form.remember_me.label(class_="form_check_label") }}
+                  </div>
+                  {{ form.submit }}
               </form>
               </form>
             </div>
