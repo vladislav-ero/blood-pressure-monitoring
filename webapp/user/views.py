@@ -15,7 +15,7 @@ def login():
         return redirect(url_for('index'))
     page_title = 'Authorization'
     login_form = LoginForm()
-    return render_template('login.html',
+    return render_template('user/login.html',
                            page_title=page_title,
                            form=login_form
                            )
