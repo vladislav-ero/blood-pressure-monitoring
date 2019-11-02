@@ -1,4 +1,4 @@
-from webapp.model import Base, engine
+from webapp.db import Base, engine
 from sqlalchemy.orm import sessionmaker
 
 Base.metadata.create_all(engine)
