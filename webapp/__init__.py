@@ -1,8 +1,9 @@
 from flask import Flask, render_template
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
-from webapp.config import SECRET_KEY
-from webapp.db import Session
+from webapp.config import SECRET_KEY, URI
+from webapp.db import Session, Base
 from webapp.admin.views import blueprint as admin_bluerprint
 from webapp.user.models import User
 from webapp.user.views import blueprint as user_blueprint
@@ -17,6 +18,7 @@ def create_app():
                            WTF_CSRF_SECRET_KEY=SECRET_KEY
                            )
                       )
+    migrate = Migrate(app, Base)
 
     login_manager = LoginManager()
     login_manager.init_app(app)
