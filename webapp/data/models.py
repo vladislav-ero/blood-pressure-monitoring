@@ -3,8 +3,8 @@ from sqlalchemy import Column, Integer, Text
 from webapp.db import Base
 
 
-class Values(Base):
-    __tablename__ = 'values'
+class Data(Base):
+    __tablename__ = 'data'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, nullable=False)
     date = Column(Text, nullable=False)

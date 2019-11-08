@@ -8,10 +8,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from flask import current_app
-
-# from webapp.config import SQLALCHEMY_DATABASE_URI
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -25,22 +21,10 @@ logger = logging.getLogger('alembic.env')
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-
-# print(SQLALCHEMY_DATABASE_URI)
-print(current_app.config.get('LOL'))
-print(current_app.config.get('SECRET_KEY'))
-print(current_app.config.get('URI'))
-
-# SQLALCHEMY_DATABASE_URI
-# print(current_app.config.get("postgresql://localhost/blood_pressure"))
-# print(dir(current_app.config))
-
+from flask import current_app
 config.set_main_option(
     'sqlalchemy.url', current_app.config.get(
-        'URI').replace('%', '%%'))
-#    'sqlalchemy.url', "postgresql://localhost/blood_pressure")
-#   'sqlalchemy.url', current_app.config.get(
-#       'postgresql://localhost/blood_pressure'))
+        'SQLALCHEMY_DATABASE_URI').replace('%', '%%'))
 target_metadata = current_app.extensions['migrate'].db.metadata
 
 # other values from the config, defined by the needs of env.py,

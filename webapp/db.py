@@ -9,6 +9,5 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI)
 metadata = MetaData(bind=engine)
 
 Base = declarative_base()
-Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)

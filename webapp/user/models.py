@@ -14,6 +14,7 @@ class User(Base, UserMixin):
     age = Column(Integer, nullable=True)
     name = Column(String, nullable=True)
     surname = Column(String, nullable=True)
+    email = Column(String, nullable=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

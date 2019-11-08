@@ -8,16 +8,34 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-            <a class="nav-link" href="/">Home page</a>
+                <a class="nav-link" href="/">Home page</a>
             </li>
-            
-            <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('user.login') }}">Log in</a>
-            </li>
+        </ul>
 
-            <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('user.logout') }}">Log out</a>
-            </li>
+        <ul class="navbar-nav ml-auto">
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">My account</a>
+                </li>
+
+                {% if current_user.is_admin %}
+                <li class="nav-item">
+                        <a class="nav-link" href="#">Admin page</a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('user.logout') }}">Log out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('user.register') }}">Register</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('user.login') }}">Log in</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
