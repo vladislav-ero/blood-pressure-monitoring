@@ -1,6 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+
+from webapp.user.models import User
+from webapp.db import Session
+
+session = Session()
 
 
 class LoginForm(FlaskForm):
@@ -45,3 +50,11 @@ class RegistrationForm(FlaskForm):
                                               btn-block text-uppercase"
                                     }
                          )
+
+    def validate_username(self, username):
+        if (session.query(User).filter_by(username=username.data).count()):
+            raise ValidationError('User with same name already exists')
+
+    def validate_email(self, email):
+        if (session.query(User).filter_by(email=email.data).count()):
+            raise ValidationError('User with same email already exists')
