@@ -16,6 +16,7 @@ class Data(Base):
     created = Column(DateTime, nullable=False, default=datetime.now())
     sys_pressure = Column(Integer, nullable=False)
     dias_pressure = Column(Integer, nullable=False)
+    pressure_category = Column(Integer, nullable=True)
 
     user = relationship('User', backref='data')
 

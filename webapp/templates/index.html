@@ -49,6 +49,21 @@
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-text">{{ measurement.sys_pressure }} / {{ measurement.dias_pressure }}</p>
+
+                                <p class="card-text">
+                                    {% if measurement.pressure_category == 0 %}
+                                        <small>Pressure category: Normal</small>
+                                    {% elif measurement.pressure_category == 1 %}
+                                        <small>Pressure category: Elevated</small>
+                                    {% elif measurement.pressure_category == 2 %}
+                                        <small>Pressure category: High blood pressure (stage 1)</small>
+                                    {% elif measurement.pressure_category == 3 %}
+                                        <small>Pressure category: High blood pressure (stage 2)</small>
+                                    {% elif measurement.pressure_category == 4 %}
+                                        <small>Pressure category: Hypertensive crisis</small>
+                                    {% endif %}
+                                </p>
+
                                 <p class="card-text">
                                     <small>Added: {{ measurement.created.strftime('%d.%m.%Y') }}</small>
                                 </p>

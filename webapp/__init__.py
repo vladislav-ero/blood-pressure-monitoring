@@ -58,9 +58,22 @@ def create_app():
         form = DataForm()
         if form.validate_on_submit():
             if session.query(User).filter_by(id=form.user_id.data).first():
+                sys_pres = form.systolic_pressure.data
+                dia_pres = form.diastolic_pressure.data
+                if sys_pres <= 120 and dia_pres <= 80:
+                    category = 0  # Normal
+                elif 120 < sys_pres <= 129 and dia_pres < 80:
+                    category = 1  # Elevated
+                elif 130 <= sys_pres <= 139 or 80 <= dia_pres <= 89:
+                    category = 2  # High blood pressure (stage 1)
+                elif sys_pres >= 190 or dia_pres >= 120:
+                    category = 4  # Hypertensive crisis
+                elif 140 <= sys_pres < 190 or 90 <= dia_pres < 120:
+                    category = 3  # High blood pressure (stage 2)
                 measurement = Data(user_id=form.user_id.data,
                                    sys_pressure=form.systolic_pressure.data,
-                                   dias_pressure=form.diastolic_pressure.data
+                                   dias_pressure=form.diastolic_pressure.data,
+                                   pressure_category=category
                                    )
                 session.add(measurement)
                 session.commit()
