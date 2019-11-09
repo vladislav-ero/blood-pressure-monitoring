@@ -20,20 +20,20 @@
                     <form class="form-signin" action="{{ url_for('user.process_reg') }}" method="POST">
                         {{ form.hidden_tag() }}
                         <div class="form-label-group">
-                            {{ form.username.label }}
                             {{ form.username() }}
+                            {{ form.username.label }}
                         </div>
                         <div class="form-label-group">
-                            {{ form.email.label }}
                             {{ form.email() }}
+                            {{ form.email.label }}
                         </div>
                         <div class="form-label-group">
-                            {{ form.password.label }}
                             {{ form.password() }}
+                            {{ form.password.label }}
                         </div>
                         <div class="form-label-group">
-                            {{ form.password2.label }}
                             {{ form.password2() }}
+                            {{ form.password2.label }}
                         </div>
                         {{ form.submit }}
                     </form>

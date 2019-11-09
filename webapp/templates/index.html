@@ -1,26 +1,85 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info" role="alert">
+                    {{ message }}<br>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class="alert alert-warning" role="alert">
-                {% for message in messages %}
-                {{ message }}<br>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% endwith %}
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Index page</h5>
-                    <h5 class="card-title text-center">Henlo fren</h5>
-                    <form class="form-signin">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase">Hello world</button>
-                    </form>
+                    
+                    {% if current_user.is_authenticated %}
+
+                        <h5 class="card-title text-center">Input your measurements</h5>
+
+                    
+                        <p class="=card-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </p>
+
+                        <hr>
+
+                        <form class="form-signin" action="{{ url_for('add_measurement') }}" method="POST">
+                                {{ data_form.hidden_tag() }}
+                                <div class="form-label-group">
+                                    {{ data_form.systolic_pressure() }}
+                                    {{ data_form.systolic_pressure.label }}
+                                </div>
+                                <div class="form-label-group">
+                                        {{ data_form.diastolic_pressure() }}
+                                        {{ data_form.diastolic_pressure.label }}
+                                </div>
+                                {{ data_form.submit() }}
+                        </form>
+
+                        <hr>
+
+                        {% if user.data %}
+                        <h3>Measurements:</h3>
+                        {% for measurement in user.data %}
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">{{ measurement.sys_pressure }} / {{ measurement.dias_pressure }}</p>
+                                <p class="card-text">
+                                    <small>Added: {{ measurement.created.strftime('%d.%m.%Y') }}</small>
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                    {% else %}
+                    
+                        <h5 class="card-title text-center">Welcome!</h5>
+
+                        <hr>
+
+                        <p class="=card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            <br>
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            
+                        </p>
+                        <p class="=card-text">
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            <br>
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
