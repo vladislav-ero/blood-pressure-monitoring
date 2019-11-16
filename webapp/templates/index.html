@@ -45,7 +45,7 @@
 
                         {% if user.data %}
                         <h3>Measurements:</h3>
-                        {% for measurement in user.data %}
+                        {% for measurement in user.data|reverse %}
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-text">{{ measurement.sys_pressure }} / {{ measurement.dias_pressure }}</p>
